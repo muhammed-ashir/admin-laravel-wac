@@ -3,7 +3,7 @@
 @section('sideitem')
 <li class="nav-item menu-open">
   <a href="/" class="nav-link active">
-    <i class="nav-icon fas fa-tachometer-alt"></i>
+    <i class="fa fa-tachometer-alt" style="margin: 7px;"></i>
     <p>
       Dashboard
     </p>
@@ -12,12 +12,21 @@
 
 <li class="nav-item menu-open">
   <a href="employees" class="nav-link">
-    <i class="nav-icon fas fa-user"></i>
+    <i class="fa fa-user" style="margin: 7px;"></i>
     <p>
       Employees
     </p>
   </a>
 </li>
+
+{{-- <li class="nav-item menu-open">
+  <a href="mm" class="nav-link">
+    <i class="fa fa-user-plus" style="margin: 7px;"></i>
+    <p>
+      Add Admin
+    </p>
+  </a>
+</li> --}}
 
 @endsection
  

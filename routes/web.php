@@ -15,8 +15,9 @@
     //     return view('welcome');
     // });
 
-Auth::routes(['register'=>false]);
+Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::view('employees', 'employees');
+Route::view('mm', 'forms.add');
