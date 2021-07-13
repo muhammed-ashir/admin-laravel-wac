@@ -1,26 +1,5 @@
 @extends('layouts.app')
 
-@section('search')
-
-<li class="nav-item d-none d-sm-inline-block ml-4">
-  <form class="form form-inline" action="">
-    <label for="input_search" class="ml-3">Search</label>
-    <input type="text" class="form-control ml-3" id="input_search" name="search_string" value="">
-    <label for="input_order" class="ml-3">Order By</label>
-    <select name="filter_col" class="form-control ml-3">
-        <option value="">dh</option>
-        <option value="">dh</option>
-    </select>
-    <select name="order_by" class="form-control ml-3" id="input_order">
-        <option value="Asc">Asc</option>
-        <option value="Desc">Desc</option>
-    </select>
-    <input type="submit" value="Go" class="btn btn-primary ml-3">
-</form>
-</li>
-
-@endsection
-
 @section('sideitem')
 <li class="nav-item menu-open">
   <a href="/" class="nav-link">
@@ -69,6 +48,22 @@
              
               <!-- /.card-header -->
               <div class="card-body">
+
+                <form class="form form-inline" action="" style="float: right;">
+                  <label for="input_search" class="ml-3">Search</label>
+                  <input type="text" class="form-control ml-3" id="input_search" name="search_string" value="">
+                  <label for="input_order" class="ml-3">Order By</label>
+                  <select name="filter_col" class="form-control ml-3">
+                      <option value="">dh</option>
+                      <option value="">dh</option>
+                  </select>
+                  <select name="order_by" class="form-control ml-3" id="input_order">
+                      <option value="Asc">Asc</option>
+                      <option value="Desc">Desc</option>
+                  </select>
+                  <input type="submit" value="Go" class="btn btn-primary ml-3">
+              </form>
+              <div style="margin-top: 8px;"></div>
                 <table id="dataTable" class="table table-bordered table-striped">
                   <thead>
                   <tr>
