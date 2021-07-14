@@ -2,7 +2,7 @@
 
 @section('addemp')
 <li class="nav-item">
-  <a class="nav-link" href="#"><i class="fas fa-user-plus" style="color: #0275d8;"></i></a>
+  <a class="nav-link" href="{{ route('employees.create') }}"><i class="fas fa-user-plus" style="color: #0275d8;"></i></a>
 </li>
 @endsection
 @section('sideitem')
@@ -16,7 +16,7 @@
 </li>
 
 <li class="nav-item menu-open">
-  <a href="employees" class="nav-link active">
+  <a href="{{ route('employees.index') }}" class="nav-link active">
     <i class="fa fa-user" style="margin: 7px;"></i>
     <p>
       Employees
@@ -67,23 +67,26 @@
                   <label for="input_search" class="ml-3">Search</label>
                   <input type="text" class="form-control ml-3" id="input_search" name="search_string" value="">
                   <label for="input_order" class="ml-3">Order By</label>
-                  <select name="filter_col" class="form-control ml-3">
-                      <option value="">dh</option>
-                      <option value="">dh</option>
+                  <select name="department" class="form-control ml-3">
+                    @foreach ($departments as $department)
+                    <option value="$department">{{ $department->department }}</option>
+                    @endforeach
                   </select>
-                  <select name="order_by" class="form-control ml-3" id="input_order">
-                      <option value="Asc">Asc</option>
-                      <option value="Desc">Desc</option>
+                  <select name="designation" class="form-control ml-3" id="input_order">
+                    @foreach ($designations as $designation)
+                    <option value="$designation">{{ $designation->designation }}</option>
+                    @endforeach
                   </select>
                   <input type="submit" value="Go" class="btn btn-primary ml-3">
               </form>
-              <div style="margin-top: 8px;"></div>
+              <div style="margin-top: 5px;"></div>
                 <table id="dataTable" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                     <th>Name</th>
                     <th>Mail id</th>
                     <th>Photo</th>
+                    <th>Address</th>
                     <th>Department</th>
                     <th>Designation</th>
                     <th>Status</th>
@@ -91,22 +94,32 @@
                   </tr>
                   </thead>
                   <tbody>
+                    @foreach ($datas as $emp)
+                      
+                   
                     <tr>
-                      <td>Name</td>
-                      <td>Mail id</td>
-                      <td>Photo</td>
-                      <td>Department</td>
-                      <td>Designation</td>
+                      <td>{{ $emp->name }}</td>
+                      <td>{{ $emp->email }}</td>
+                      <td><img src="{{ asset('images/'.$emp->photo) }}" alt="" height="50px" width="70px"></td>
+                      <td>{{ $emp->address }}</td>
+                      <td>{{ $emp->department->department }}</td>
+                      <td>{{ $emp->designation->designation }}</td>
                       <td>
-                            <a href="" onclick="return confirm('Do you really want to Un-Confirm the Account')" style="color: green">Active &nbsp;<i class="fa fa-user-check"></i></a>
-                            <a href="" onclick="return confirm('Do you really want to Confirm the Account')" style="color: red">Blocked &nbsp;<i class="fa fa-user-times"></i></a>
+                        @if ($emp->status)
+                        <a href="" onclick="return confirm('Do you really want to Un-Confirm the Account')" style="color: green">Active &nbsp;<i class="fa fa-user-check"></i></a>
+                        @else
+                        <a href="" onclick="return confirm('Do you really want to Confirm the Account')" style="color: red">Blocked &nbsp;<i class="fa fa-user-times"></i></a>
+                        @endif
+                            
+                            
                       </td>
                       <td>
-                            <a href="">&nbsp; <i class="fa fa-eye" style="color:black;margin:7px;"></i></a>
-                            <a href="" onclick="return confirm('Do you want to Edit');">&nbsp; <i class="fa fa-edit" style="margin: 7px;"></i></a>
-                            <a href="" onclick="return confirm('Do you want to Delete');"><i class="fa fa-trash" style="color:red;margin: 7px;"></i></a>
+                            <a href="{{ route('employees.index') }}">&nbsp; <i class="fa fa-eye" style="color:black;margin:5px;"></i></a>
+                            <a href="" onclick="return confirm('Do you want to Edit');">&nbsp; <i class="fa fa-edit" style="margin: 5px;"></i></a>
+                            <a href="" onclick="return confirm('Do you want to Delete');"><i class="fa fa-trash" style="color:red;margin: 5px;"></i></a>
                       </td>
                     </tr>
+                    @endforeach
                   </tbody>
          
                 </table>

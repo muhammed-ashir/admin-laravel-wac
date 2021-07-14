@@ -11,7 +11,7 @@
 </li>
 
 <li class="nav-item menu-open">
-  <a href="employees" class="nav-link">
+  <a href="{{ route('employees.index') }}" class="nav-link">
     <i class="fa fa-user" style="margin: 7px;"></i>
     <p>
       Employees

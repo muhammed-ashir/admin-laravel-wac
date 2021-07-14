@@ -11,7 +11,7 @@
 </li>
 
 <li class="nav-item menu-open">
-  <a href="employees" class="nav-link">
+  <a href="{{ route('employees.index') }}" class="nav-link">
     <i class="fa fa-user" style="margin: 7px;"></i>
     <p>
       Employees
@@ -58,18 +58,19 @@
               <!-- /.card-header -->
               <div class="card-body">
 
-                <form style="padding-left: 150px;padding-right: 150px;">
+                <form style="padding-left: 150px;padding-right: 150px;" action="{{ route('employees.store') }}" method="POST" enctype="multipart/form-data">
+                  @csrf
                   <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" class="form-control" id="name" placeholder="Name" name="name">
                   </div>
                   <div class="form-group">
                     <label for="email">Email address</label>
-                    <input type="email" class="form-control" id="email" placeholder="Email address" name="email">
+                    <input type="email" class="form-control" id="email" placeholder="Email address" name="email" autocomplete="off">
                   </div>
                   <div class="form-group">
                     <label for="pwd">Password</label>
-                    <input type="password" class="form-control" id="pwd" placeholder="Password" name="pwd">
+                    <input type="password" class="form-control" autocomplete="off" id="pwd" placeholder="Password" name="pwd">
                   </div>
                   <div class="form-group">
                     <label for="photo">Photo</label>
@@ -82,21 +83,17 @@
                   <div class="form-group">
                   <label for="department">Department</label>
                   <select class="form-control" id="department" name="department">
-                      <option>Human Resource</option>
-                      <option>Marketing</option>
-                      <option>Finance</option>
-                      <option>Sales</option>
-                      <option>Operations</option>
-                  </select>
+                    @foreach ($departments as $department)
+                    <option value="{{ $department->id }}">{{ $department->department }}</option>
+                    @endforeach
+                  </select> 
                   </div>
                   <div class="form-group">
                     <label for="designation">Designation</label>
                     <select class="form-control" id="designation" name="designation">
-                        <option>Software Engineer</option>
-                        <option>System Analyst</option>
-                        <option>Project Lead</option>
-                        <option>Trainee Engineer</option>
-                        <option>Web Developer</option>
+                      @foreach ($designations as $designation)
+                      <option value="{{ $designation->id }}">{{ $designation->designation }}</option>
+                      @endforeach
                     </select>
                   </div>
                   <button type="submit" class="btn btn-primary">Submit</button>

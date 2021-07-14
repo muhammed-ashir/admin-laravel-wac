@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Employee;
+use App\Department;
+use App\Designation;
+
 
 class EmployeeController extends Controller
 {
@@ -13,7 +17,12 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+
+ 
+        $datas = Employee::all();
+        $departments = Department::all();
+        $designations = Designation::all();
+        return view('employees', compact('datas','departments','designations'));
     }
 
     /**
@@ -23,7 +32,9 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        $departments = Department::all();
+        $designations = Designation::all();
+        return view('forms.add',compact('departments','designations'));
     }
 
     /**
@@ -34,7 +45,24 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    
+        $image  = time().'.'.$request->photo->extension();
+        $request->photo->move(public_path('images'), $image);
+        
+
+        Employee::create([
+            'name'=>$request['name'],
+            'email'=>$request['email'],
+            'photo'=>$image,
+            'password'=>$request['pwd'],
+            'address'=>$request['address'],
+            'department_id'=>$request['department'],
+            'designation_id'=>$request['designation']
+
+        ]);
+
+        return redirect()->route('employees.index')->with('success','successfully done');
+
     }
 
     /**
@@ -81,4 +109,8 @@ class EmployeeController extends Controller
     {
         //
     }
+
+    // public function status($status){
+    //    $employee = new Employee;
+    // }
 }

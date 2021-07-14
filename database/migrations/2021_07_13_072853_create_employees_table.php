@@ -22,6 +22,7 @@ class CreateEmployeesTable extends Migration
             $table->text("address");
             $table->unsignedBigInteger('department_id');
             $table->unsignedBigInteger('designation_id');
+            $table->text("status")->default(1);
             $table->foreign('department_id')->references('id')->on('departments');
             $table->foreign('designation_id')->references('id')->on('designations');
             $table->timestamps();

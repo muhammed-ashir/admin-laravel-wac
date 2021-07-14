@@ -11,13 +11,10 @@
 |
 */
 
-    // Route::get('/', function () {
-    //     return view('welcome');
-    // });
 
-Auth::routes();
+Auth::routes(['register'=>false]);
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::view('employees', 'employees');
-Route::view('mm', 'forms.add');
+Route::resource('/employees', 'EmployeeController');
+// Route::get('/employees/status/{status}','EmployeeController@status');

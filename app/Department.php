@@ -6,7 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Department extends Model
 {
+    protected $table = 'departments';
     protected $fillable = [
-        'departments',
+        'department',
     ];
+
+
+    public function department()
+    {
+        return $this->hasOne(Department::class);
+    }
 }

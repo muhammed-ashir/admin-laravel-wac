@@ -18,6 +18,16 @@ class CreateDesignationsTable extends Migration
             $table->string("designation");
             $table->timestamps();
         });
+
+        $data[]=['designation' => "Software Engineer" ];
+        $data[]=['designation' => "System Analyst" ];
+        $data[]=['designation' => "Project Lead" ];
+        $data[]=['designation' => "Trainee Engineer" ];
+        $data[]=['designation' => "Web Developer" ];
+
+        DB::table('designations')->insert(
+            $data 
+          );
     }
 
     /**

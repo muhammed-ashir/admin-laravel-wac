@@ -18,6 +18,19 @@ class CreateDepartmentsTable extends Migration
             $table->string("department");
             $table->timestamps();
         });
+
+        //
+
+        $data[]=['department' => "Human Resource" ];
+        $data[]=['department' => "Marketing" ];
+        $data[]=['department' => "Finance" ];
+        $data[]=['department' => "Sales" ];
+        $data[]=['department' => "Development" ];
+        DB::table('departments')->insert(
+          $data 
+        );
+
+        
     }
 
     /**
