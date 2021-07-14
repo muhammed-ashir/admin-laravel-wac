@@ -63,18 +63,30 @@
                   <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" class="form-control" id="name" placeholder="Name" name="name">
+                    @if ($errors->has('name'))
+                            <span class="text-danger">{{ $errors->first('name') }}</span>
+                    @endif
                   </div>
                   <div class="form-group">
                     <label for="email">Email address</label>
                     <input type="email" class="form-control" id="email" placeholder="Email address" name="email" autocomplete="off">
+                    @if ($errors->has('email'))
+                            <span class="text-danger">{{ $errors->first('email') }}</span>
+                    @endif
                   </div>
                   <div class="form-group">
                     <label for="pwd">Password</label>
                     <input type="password" class="form-control" autocomplete="off" id="pwd" placeholder="Password" name="pwd">
+                    @if ($errors->has('pwd'))
+                            <span class="text-danger">{{ $errors->first('pwd') }}</span>
+                    @endif
                   </div>
                   <div class="form-group">
                     <label for="photo">Photo</label>
                     <input type="file" class="form-control" id="photo" name="photo">
+                    @if ($errors->has('photo'))
+                            <span class="text-danger">{{ $errors->first('photo') }}</span>
+                    @endif
                   </div>
                   <div class="form-group">
                   <label for="address">Address</label>

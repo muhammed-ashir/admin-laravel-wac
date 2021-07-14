@@ -45,7 +45,21 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate([
+	        'name' => 'required',
+	        'pwd' => 'required|min:5',
+	        'email' => 'required|email|unique:employees',
+            'photo' => 'image|mimes:jpeg,png,jpg|max:5120',
+	    ], [
+	        'name.required' => 'Name is required',
+	        'pwd.required' => 'Password is required',
+            'pwd.required' => 'Password is required',
+            'pwd.min' => 'Password should have 5 characters',
+            'photo.mimes' => 'Image type should be jpg or png'
+	    ]);
     
+
         $image  = time().'.'.$request->photo->extension();
         $request->photo->move(public_path('images'), $image);
         
@@ -54,7 +68,7 @@ class EmployeeController extends Controller
             'name'=>$request['name'],
             'email'=>$request['email'],
             'photo'=>$image,
-            'password'=>$request['pwd'],
+            'password'=>bcrypt($request['pwd']),
             'address'=>$request['address'],
             'department_id'=>$request['department'],
             'designation_id'=>$request['designation']
@@ -110,7 +124,7 @@ class EmployeeController extends Controller
         //
     }
 
-    // public function status($status){
-    //    $employee = new Employee;
-    // }
+    public function status($status){
+       $employee = new Employee;
+    }
 }
