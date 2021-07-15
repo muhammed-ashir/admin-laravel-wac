@@ -104,7 +104,12 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Employee::find($id);
+
+        $departments = Department::all();
+        $designations = Designation::all();
+
+        return view('forms.edit',compact('data','departments','designations'));
     }
 
     /**
