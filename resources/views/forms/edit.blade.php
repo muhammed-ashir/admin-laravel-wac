@@ -98,7 +98,7 @@
                   <div class="form-group">
                   <label for="department">Department</label>
                   <select class="form-control" id="department" name="department">
-                    <option value="{{ $data->department->department }}">{{ $data->department->department }}</option>
+                    <option value="{{ $data->department->id }}">{{ $data->department->department }}</option>
                     @foreach ($departments as $department)
                     <option value="{{ $department->id }}">{{ $department->department }}</option>
                     @endforeach
@@ -107,7 +107,7 @@
                   <div class="form-group">
                     <label for="designation">Designation</label>
                     <select class="form-control" id="designation" name="designation">
-                      <option value="{{ $data->designation->designation }}">{{ $data->designation->designation }}</option>
+                      <option value="{{ $data->designation->id }}">{{ $data->designation->designation }}</option>
                       @foreach ($designations as $designation)
                       <option value="{{ $designation->id }}">{{ $designation->designation }}</option>
                       @endforeach

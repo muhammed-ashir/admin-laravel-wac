@@ -81,7 +81,7 @@ class EmployeeController extends Controller
 
         ]);
 
-        return redirect()->route('employees.index')->with('success','successfully done');
+        return redirect()->route('employees.index')->with('success','Added Successfully');
 
     }
 
@@ -121,7 +121,39 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $request->validate([
+	        'name' => 'required',
+	        'pwd' => 'required|min:5',
+	        'email' => 'required|email',
+            'photo' => 'image|mimes:jpeg,png,jpg|max:5120',
+	    ], [
+	        'name.required' => 'Name is required',
+	        'pwd.required' => 'Password is required',
+            'pwd.required' => 'Password is required',
+            'pwd.min' => 'Password should have 5 characters',
+            'photo.mimes' => 'Image type should be jpg or png'
+	    ]);
+
+        $data = Employee::find($id);
+
+        if($request->photo){
+            $image  = time().'.'.$request->photo->extension();
+            $request->photo->move(public_path('images'), $image);
+            $data->photo = $image;
+        }
+
+        $data->name = $request->name;
+        $data->email = $request->email;
+        $data->password = $request->pwd;
+        $data->address = $request->address;
+        $data->department_id = $request->department;
+        $data->designation_id = $request->designation;
+        $data->save();
+
+        return redirect()->route('employees.index')
+                        ->with('success','Updated Successfully');
+
     }
 
     /**
@@ -147,7 +179,7 @@ class EmployeeController extends Controller
        
   
         return redirect()->route('employees.index')
-                        ->with('success','Deleted successfully');
+                        ->with('success','Deleted Successfully');
     }
 
     public function status($status){
