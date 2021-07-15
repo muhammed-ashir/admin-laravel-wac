@@ -10,6 +10,12 @@ use App\Designation;
 
 class EmployeeController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -121,10 +127,25 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Employee::find($id);
+        $image = $data->photo;
+        
+        $file_path  = public_path('images/');
+        $image_path = $file_path.$image;
+
+        if(file_exists($image_path)){
+            @unlink($image_path);
+        }
+
+
+        $data->delete();
+       
+  
+        return redirect()->route('employees.index')
+                        ->with('success','Deleted successfully');
     }
 
     public function status($status){
-       $employee = new Employee;
+    //    $employee = new Employee;
     }
 }

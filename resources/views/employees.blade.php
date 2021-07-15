@@ -116,7 +116,14 @@
                       <td>
                             <a href="{{ route('employees.index') }}">&nbsp; <i class="fa fa-eye" style="color:black;margin:5px;"></i></a>
                             <a href="" onclick="return confirm('Do you want to Edit');">&nbsp; <i class="fa fa-edit" style="margin: 5px;"></i></a>
-                            <a href="" onclick="return confirm('Do you want to Delete');"><i class="fa fa-trash" style="color:red;margin: 5px;"></i></a>
+                            <form action="{{ route('employees.destroy',$emp->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" onclick="return confirm('Do you want to Delete');" style="border: none;">
+                              <i class="fa fa-trash" style="color:red;margin: 5px;"></i>
+                            </button>
+  
+                            </form>
                       </td>
                     </tr>
                     @endforeach
