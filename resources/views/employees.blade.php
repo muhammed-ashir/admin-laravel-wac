@@ -139,18 +139,21 @@
               <!-- /.card-header -->
               <div class="card-body">
 
-                <form class="form form-inline" action="" style="float: right;">
+                <form class="form form-inline" method="POST" action="{{ url('employees/search') }}" style="float: right;">
+                  @csrf
                   <label for="input_search" class="ml-3">Search</label>
                   <input type="text" class="form-control ml-3" id="input_search" name="search_string" value="">
                   <label for="input_order" class="ml-3">Order By</label>
                   <select name="department" class="form-control ml-3">
+                    <option value=""> Select Department</option>
                     @foreach ($departments as $department)
-                    <option value="$department">{{ $department->department }}</option>
+                    <option value="{{ $department->id }}">{{ $department->department }}</option>
                     @endforeach
                   </select>
                   <select name="designation" class="form-control ml-3" id="input_order">
+                    <option value=""> Select Designation</option>
                     @foreach ($designations as $designation)
-                    <option value="$designation">{{ $designation->designation }}</option>
+                    <option value="{{ $designation->id }}">{{ $designation->designation }}</option>
                     @endforeach
                   </select>
                   <input type="submit" value="Go" class="btn btn-primary ml-3">
@@ -220,5 +223,7 @@
     </section>
     <!-- /.content -->
   </div>
+  
 
 @endsection
+

@@ -24,11 +24,11 @@ class EmployeeController extends Controller
     public function index()
     {
 
- 
+
         $datas = Employee::all();
         $departments = Department::all();
         $designations = Designation::all();
-        return view('employees', compact('datas','departments','designations'));
+        return view('employees', compact('datas', 'departments', 'designations'));
     }
 
     /**
@@ -40,7 +40,7 @@ class EmployeeController extends Controller
     {
         $departments = Department::all();
         $designations = Designation::all();
-        return view('forms.add',compact('departments','designations'));
+        return view('forms.add', compact('departments', 'designations'));
     }
 
     /**
@@ -53,37 +53,36 @@ class EmployeeController extends Controller
     {
 
         $request->validate([
-	        'name' => 'required',
-	        'pwd' => 'required|min:5',
-	        'email' => 'required|email|unique:employees',
+            'name' => 'required',
+            'pwd' => 'required|min:5',
+            'email' => 'required|email|unique:employees',
             'photo' => 'image|mimes:jpeg,png,jpg|max:5120',
-	    ], [
-	        'name.required' => 'Name is required',
-	        'pwd.required' => 'Password is required',
+        ], [
+            'name.required' => 'Name is required',
+            'pwd.required' => 'Password is required',
             'pwd.required' => 'Password is required',
             'pwd.min' => 'Password should have 5 characters',
             'photo.mimes' => 'Image type should be jpg or png'
-	    ]);
-    
+        ]);
 
-        $image  = time().'.'.$request->photo->extension();
+
+        $image  = time() . '.' . $request->photo->extension();
         $request->photo->move(public_path('images'), $image);
-        
+
 
         Employee::create([
-            'name'=>$request['name'],
-            'email'=>$request['email'],
-            'photo'=>$image,
-            'password'=>bcrypt($request['pwd']),
-            'address'=>$request['address'],
-            'department_id'=>$request['department'],
-            'designation_id'=>$request['designation']
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'photo' => $image,
+            'password' => bcrypt($request['pwd']),
+            'address' => $request['address'],
+            'department_id' => $request['department'],
+            'designation_id' => $request['designation']
 
         ]);
 
         return redirect()->route('employees.index')
-                         ->with('success','Added Successfully');
-
+            ->with('success', 'Added Successfully');
     }
 
     /**
@@ -110,7 +109,7 @@ class EmployeeController extends Controller
         $departments = Department::all();
         $designations = Designation::all();
 
-        return view('forms.edit',compact('data','departments','designations'));
+        return view('forms.edit', compact('data', 'departments', 'designations'));
     }
 
     /**
@@ -122,24 +121,24 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $request->validate([
-	        'name' => 'required',
-	        'pwd' => 'required|min:5',
-	        'email' => 'required|email',
+            'name' => 'required',
+            'pwd' => 'required|min:5',
+            'email' => 'required|email',
             'photo' => 'image|mimes:jpeg,png,jpg|max:5120',
-	    ], [
-	        'name.required' => 'Name is required',
-	        'pwd.required' => 'Password is required',
+        ], [
+            'name.required' => 'Name is required',
+            'pwd.required' => 'Password is required',
             'pwd.required' => 'Password is required',
             'pwd.min' => 'Password should have 5 characters',
             'photo.mimes' => 'Image type should be jpg or png'
-	    ]);
+        ]);
 
         $data = Employee::find($id);
 
-        if($request->photo){
-            $image  = time().'.'.$request->photo->extension();
+        if ($request->photo) {
+            $image  = time() . '.' . $request->photo->extension();
             $request->photo->move(public_path('images'), $image);
             $data->photo = $image;
         }
@@ -153,8 +152,7 @@ class EmployeeController extends Controller
         $data->save();
 
         return redirect()->route('employees.index')
-                         ->with('success','Updated Successfully');
-
+            ->with('success', 'Updated Successfully');
     }
 
     /**
@@ -167,23 +165,24 @@ class EmployeeController extends Controller
     {
         $data = Employee::find($id);
         $image = $data->photo;
-        
-        $file_path  = public_path('images/');
-        $image_path = $file_path.$image;
 
-        if(file_exists($image_path)){
+        $file_path  = public_path('images/');
+        $image_path = $file_path . $image;
+
+        if (file_exists($image_path)) {
             @unlink($image_path);
         }
 
 
         $data->delete();
-       
-  
+
+
         return redirect()->route('employees.index')
-                         ->with('success','Deleted Successfully');
+            ->with('success', 'Deleted Successfully');
     }
 
-    public function status($status,$id){
+    public function status($status, $id)
+    {
 
         $data = Employee::find($id);
 
@@ -191,6 +190,30 @@ class EmployeeController extends Controller
         $data->save();
 
         return redirect()->route('employees.index')
-                         ->with('success','Status Changed Successfully');
+            ->with('success', 'Status Changed Successfully');
+    }
+
+    public function search(Request $request)
+    {
+
+
+        $datas = Employee::query();
+        if (!empty($request->search_string)) {
+            $datas = $datas->where('name', 'LIKE', "%$request->search_string%");
+        }
+
+        if (!empty($request->department)) {
+            $datas = $datas->where('department_id', '=', $request->department);
+        }
+        if (!empty($request->designation)) {
+
+            $datas = $datas->where('designation_id', '=', $request->designation);
+        }
+        $datas = $datas->get();
+
+        // dd($datas);
+        $departments = Department::all();
+        $designations = Designation::all();
+        return view('employees', compact('datas', 'departments', 'designations'));
     }
 }
