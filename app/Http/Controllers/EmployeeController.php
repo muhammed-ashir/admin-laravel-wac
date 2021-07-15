@@ -81,7 +81,8 @@ class EmployeeController extends Controller
 
         ]);
 
-        return redirect()->route('employees.index')->with('success','Added Successfully');
+        return redirect()->route('employees.index')
+                         ->with('success','Added Successfully');
 
     }
 
@@ -152,7 +153,7 @@ class EmployeeController extends Controller
         $data->save();
 
         return redirect()->route('employees.index')
-                        ->with('success','Updated Successfully');
+                         ->with('success','Updated Successfully');
 
     }
 
@@ -179,7 +180,7 @@ class EmployeeController extends Controller
        
   
         return redirect()->route('employees.index')
-                        ->with('success','Deleted Successfully');
+                         ->with('success','Deleted Successfully');
     }
 
     public function status($status,$id){
@@ -192,6 +193,6 @@ class EmployeeController extends Controller
         $data->save();
 
         return redirect()->route('employees.index')
-                        ->with('success','Status Changed Successfully');
+                         ->with('success','Status Changed Successfully');
     }
 }

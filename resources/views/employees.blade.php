@@ -37,6 +37,29 @@
 
 @section('content')
 
+{{-- modal start here--}}
+
+<!-- Button trigger modal -->
+
+<div class="modal fade" id="view" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ....
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+{{-- modal ends here --}}
+
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -106,21 +129,21 @@
                       <td>{{ $emp->designation->designation }}</td>
                       <td>
                         @if ($emp->status)
-                        <a href="employees/status/0/{{ $emp->id }}" onclick="return confirm('Do you really want to Un-Confirm the Account')" style="color: green">Active &nbsp;<i class="fa fa-user-check"></i></a>
+                        <a href="employees/status/0/{{ $emp->id }}" onclick="return confirm('Do you really want to Block')" style="color: green">Active &nbsp;<i class="fa fa-user-check"></i></a>
                         @else
-                        <a href="employees/status/1/{{ $emp->id }}" onclick="return confirm('Do you really want to Confirm the Account')" style="color: red">Blocked &nbsp;<i class="fa fa-user-times"></i></a>
+                        <a href="employees/status/1/{{ $emp->id }}" onclick="return confirm('Do you really want to Un-Block')" style="color: red">Blocked &nbsp;<i class="fa fa-user-times"></i></a>
                         @endif
                             
                             
                       </td>
                       <td>
-                            <a href="{{ route('employees.index') }}">&nbsp; <i class="fa fa-eye" style="color:black;margin:5px;"></i></a>
-                            <a href="{{ route('employees.edit',$emp->id) }}" onclick="return confirm('Do you want to Edit');">&nbsp; <i class="fa fa-edit" style="margin: 5px;"></i></a>
+                            <a href="" class="btn" data-toggle="modal" data-target="#view" style="color: black;margin:5px;padding:0;"><i class="fa fa-eye"></i></a>
+                            <a href="{{ route('employees.edit',$emp->id) }}" onclick="return confirm('Do you want to Edit');" style="margin: 5px;"><i class="fa fa-edit"></i></a>
                             <form action="{{ route('employees.destroy',$emp->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" onclick="return confirm('Do you want to Delete');" style="border: none;background: none;">
-                              <i class="fa fa-trash" style="color:red;margin: 5px;"></i>
+                            <button type="submit" onclick="return confirm('Do you want to Delete');" style="border: none;background: none;margin:5px;">
+                              <i class="fa fa-trash" style="color:red;"></i>
                             </button>
   
                             </form>
