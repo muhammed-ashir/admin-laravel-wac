@@ -184,8 +184,6 @@ class EmployeeController extends Controller
     }
 
     public function status($status,$id){
-    
-    // dd($status, $id);
 
         $data = Employee::find($id);
 

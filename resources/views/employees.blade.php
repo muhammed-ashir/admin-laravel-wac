@@ -45,13 +45,66 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Details</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ....
+        {{-- modal body --}}
+
+                  <div class="col-xl-12 col-md-12">
+                      <div class="card user-card-full">
+                          <div class="row m-l-0 m-r-0">
+                              <div class="col-sm-4 bg-c-lite-green user-profile">
+                                  <div class="card-block text-center text-white">
+                                      <div class="m-b-20"> <img src="" id="photo" class="img-radius" alt="UserImage"> </div>
+                                      <h6 class="f-w-600" id="name"></h6>
+                                      <p id="designation"></p>
+                                  </div>
+                              </div>
+                              <div class="col-sm-8">
+                                  <div class="card-block">
+                                      <h6 class="p-b-5 b-b-default f-w-600">Status</h6>
+                                      <div class="row">
+                                        <div class="col-sm-12 mb-3">
+
+                                          <h6 class="text-muted f-w-400" id="status"></h6>
+                                   
+                                        </div>
+                                      </div>
+                                      <h6 class="p-b-5 b-b-default f-w-600">Department</h6>
+                                      <div class="row">
+                                        <div class="col-sm-12 mb-3">
+
+                                          <h6 class="text-muted f-w-400" id="department"></h6>
+                                   
+                                        </div>
+                                      </div>
+                                      <h6 class="p-b-5 b-b-default f-w-600">Mail id</h6>
+                                      <div class="row">
+                                        <div class="col-sm-12 mb-3">
+
+                                          <h6 class="text-muted f-w-400" id="email"></h6>
+                                   
+                                        </div>
+                                      </div>
+                                      <h6 class="p-b-5 b-b-default f-w-600">Address</h6>
+                                      <div class="row">
+                                          <div class="col-sm-12 mb-3">
+
+                                              <h6 class="text-muted f-w-400" id="address"></h6>
+                                       
+                                          </div>
+                                      </div>
+                                      
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+        {{-- modal body ends --}}
       </div>
       
     </div>
@@ -127,6 +180,7 @@
                       <td>{{ $emp->address }}</td>
                       <td>{{ $emp->department->department }}</td>
                       <td>{{ $emp->designation->designation }}</td>
+                      
                       <td>
                         @if ($emp->status)
                         <a href="employees/status/0/{{ $emp->id }}" onclick="return confirm('Do you really want to Block')" style="color: green">Active &nbsp;<i class="fa fa-user-check"></i></a>
@@ -137,7 +191,7 @@
                             
                       </td>
                       <td>
-                            <a href="" class="btn" data-toggle="modal" data-target="#view" style="color: black;margin:5px;padding:0;"><i class="fa fa-eye"></i></a>
+                            <a href="" class="btn" data-toggle="modal" data-target="#view" style="color: black;margin:5px;padding:0;" onclick="viewBtn('{{ $emp->name }}','{{ $emp->email }}','{{ $emp->photo }}','{{ $emp->address }}','{{ $emp->department->department }}','{{ $emp->designation->designation }}','{{ $emp->status }}')"><i class="fa fa-eye"></i></a>
                             <a href="{{ route('employees.edit',$emp->id) }}" onclick="return confirm('Do you want to Edit');" style="margin: 5px;"><i class="fa fa-edit"></i></a>
                             <form action="{{ route('employees.destroy',$emp->id) }}" method="POST">
                             @csrf
@@ -166,6 +220,5 @@
     </section>
     <!-- /.content -->
   </div>
-
 
 @endsection
