@@ -182,7 +182,16 @@ class EmployeeController extends Controller
                         ->with('success','Deleted Successfully');
     }
 
-    public function status($status){
-    //    $employee = new Employee;
+    public function status($status,$id){
+    
+    // dd($status, $id);
+
+        $data = Employee::find($id);
+
+        $data->status = $status;
+        $data->save();
+
+        return redirect()->route('employees.index')
+                        ->with('success','Status Changed Successfully');
     }
 }

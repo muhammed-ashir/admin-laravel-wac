@@ -106,9 +106,9 @@
                       <td>{{ $emp->designation->designation }}</td>
                       <td>
                         @if ($emp->status)
-                        <a href="employees/status/0" onclick="return confirm('Do you really want to Un-Confirm the Account')" style="color: green">Active &nbsp;<i class="fa fa-user-check"></i></a>
+                        <a href="employees/status/0/{{ $emp->id }}" onclick="return confirm('Do you really want to Un-Confirm the Account')" style="color: green">Active &nbsp;<i class="fa fa-user-check"></i></a>
                         @else
-                        <a href="employees/status/1" onclick="return confirm('Do you really want to Confirm the Account')" style="color: red">Blocked &nbsp;<i class="fa fa-user-times"></i></a>
+                        <a href="employees/status/1/{{ $emp->id }}" onclick="return confirm('Do you really want to Confirm the Account')" style="color: red">Blocked &nbsp;<i class="fa fa-user-times"></i></a>
                         @endif
                             
                             
