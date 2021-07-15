@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Employee;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $count_active = Employee::all()->count();
+        $count_blocked  = Employee::where('status',0)->count();
+        $count = [
+            'count_active'=>$count_active,
+            'count_blocked'=>$count_blocked
+        ];
+        return view('home',compact('count'));
     }
+
+
 }

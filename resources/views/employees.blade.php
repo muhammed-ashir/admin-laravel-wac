@@ -157,7 +157,9 @@
                   <option value="{{ $designation->id }}">{{ $designation->designation }}</option>
                   @endforeach
                 </select>
-                <input type="submit" value="Go" class="btn btn-primary ml-3">
+                <button type="submit" class="btn btn-primary ml-3"><i
+                  class="fa fa-search"></i></button>
+                {{-- <input type="submit" value="Go" class="btn btn-primary ml-3"> --}}
               </form>
               <div style="margin-top: 5px;"></div>
               <table id="dataTable" class="table table-bordered table-striped">
@@ -175,7 +177,7 @@
                 </thead>
                 <tbody>
                   @foreach ($datas as $emp)
-                  {{-- employees/status/1/{{ $emp->id }} --}}
+                  
 
                   <tr>
                     <td>{{ $emp->name }}</td>
