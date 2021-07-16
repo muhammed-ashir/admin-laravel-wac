@@ -6,7 +6,7 @@ Hi,{{ $employee->name }}
 
 
 @component('mail::button', ['url' => ''])
-Button Text
+Reset Password
 @endcomponent
 
 Thanks,<br>

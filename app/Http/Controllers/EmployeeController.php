@@ -8,6 +8,7 @@ use App\Department;
 use App\Designation;
 use App\Mail\WelcomeEmployee;
 use Illuminate\Support\Facades\Mail;
+use App\Jobs\WelcomeEmailJob;
 
 
 class EmployeeController extends Controller
@@ -93,11 +94,7 @@ class EmployeeController extends Controller
         $employee->designation_id = $request->designation;
         $employee->save();
         
-        
-
-
-        // mail sending
-        Mail::to($employee)->send(new WelcomeEmployee($employee));
+        dispatch(new WelcomeEmailJob($employee));
 
         return redirect()->route('employees.index')
             ->with('success', 'Added Successfully');
