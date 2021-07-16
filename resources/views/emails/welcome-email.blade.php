@@ -1,7 +1,9 @@
 @component('mail::message')
-Hi,
+Hi,{{ $employee->name }}
+<br>
+<P>Email id : {{ $employee->email }}
+</P>
 
-Your Account created
 
 @component('mail::button', ['url' => ''])
 Button Text
