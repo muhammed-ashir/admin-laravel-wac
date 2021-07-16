@@ -59,7 +59,7 @@ class EmployeeController extends Controller
             'name' => 'required',
             'pwd' => 'required|min:5',
             'email' => 'required|email|unique:employees',
-            'photo' => 'image|mimes:jpeg,png,jpg|max:5120',
+            'photo' => 'required|image|mimes:jpeg,png,jpg|max:5120',
         ], [
             'name.required' => 'Name is required',
             'pwd.required' => 'Password is required',
@@ -141,7 +141,7 @@ class EmployeeController extends Controller
             'name' => 'required',
             'pwd' => 'required|min:5',
             'email' => 'required|email',
-            'photo' => 'image|mimes:jpeg,png,jpg|max:5120',
+            'photo' => 'required|image|mimes:jpeg,png,jpg|max:5120',
         ], [
             'name.required' => 'Name is required',
             'pwd.required' => 'Password is required',

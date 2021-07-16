@@ -75,14 +75,7 @@
                             <span class="text-danger">{{ $errors->first('email') }}</span>
                     @endif
                   </div>
-                  <div class="form-group">
-                    <label for="pwd">Password</label>
-                    
-                    <input type="password" class="form-control" autocomplete="off" id="pwd" placeholder="Password" name="pwd" value="{{ $data->password }}">
-                    @if ($errors->has('pwd'))
-                            <span class="text-danger">{{ $errors->first('pwd') }}</span>
-                    @endif
-                  </div>
+                  
                   <div class="form-group">
                     <label for="photo">Photo</label>
                     <div><img src="{{ asset('images/'.$data->photo) }}" width="100px" height="100px"></div>

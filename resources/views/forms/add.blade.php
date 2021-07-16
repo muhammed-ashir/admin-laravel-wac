@@ -62,14 +62,14 @@
                   @csrf
                   <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" placeholder="Name" name="name">
+                    <input type="text" class="form-control" id="name" placeholder="Name" name="name" value="{{ old('name') }}">
                     @if ($errors->has('name'))
                             <span class="text-danger">{{ $errors->first('name') }}</span>
                     @endif
                   </div>
                   <div class="form-group">
                     <label for="email">Email address</label>
-                    <input type="email" class="form-control" id="email" placeholder="Email address" name="email" autocomplete="off">
+                    <input type="email" class="form-control" id="email" placeholder="Email address" name="email" autocomplete="off" value="{{ old('email') }}">
                     @if ($errors->has('email'))
                             <span class="text-danger">{{ $errors->first('email') }}</span>
                     @endif
@@ -90,7 +90,7 @@
                   </div>
                   <div class="form-group">
                   <label for="address">Address</label>
-                  <textarea class="form-control" id="address" rows="3" name="address"></textarea>
+                  <textarea class="form-control" id="address" rows="3" name="address" value="{{ old('address') }}"></textarea>
                   </div>
                   <div class="form-group">
                   <label for="department">Department</label>
