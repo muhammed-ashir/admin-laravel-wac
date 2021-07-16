@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Employee;
 use App\Department;
 use App\Designation;
+use App\Mail\WelcomeEmployee;
+use Illuminate\Support\Facades\Mail;
 
 
 class EmployeeController extends Controller
@@ -70,16 +72,32 @@ class EmployeeController extends Controller
         $request->photo->move(public_path('images'), $image);
 
 
-        Employee::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'photo' => $image,
-            'password' => bcrypt($request['pwd']),
-            'address' => $request['address'],
-            'department_id' => $request['department'],
-            'designation_id' => $request['designation']
+        // Employee::create([
+        //     'name' => $request['name'],
+        //     'email' => $request['email'],
+        //     'photo' => $image,
+        //     'password' => bcrypt($request['pwd']),
+        //     'address' => $request['address'],
+        //     'department_id' => $request['department'],
+        //     'designation_id' => $request['designation']
 
-        ]);
+        // ]);
+
+        $employee =  new Employee();
+        $employee->name = $request->name;
+        $employee->email = $request->email;
+        $employee->photo = $image;
+        $employee->password = bcrypt($request->pwd);
+        $employee->address = $request->address;
+        $employee->department_id = $request->department;
+        $employee->designation_id = $request->designation;
+        $employee->save();
+        
+        
+
+
+        // mail sending
+        Mail::to($employee)->send(new WelcomeEmployee());
 
         return redirect()->route('employees.index')
             ->with('success', 'Added Successfully');
