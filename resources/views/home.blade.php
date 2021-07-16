@@ -2,7 +2,7 @@
 
 @section('sideitem')
 <li class="nav-item menu-open">
-  <a href="/" class="nav-link active">
+  <a href="{{ url('/') }}" class="nav-link active">
     <i class="fa fa-tachometer-alt" style="margin: 7px;"></i>
     <p>
       Dashboard
