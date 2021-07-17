@@ -42,6 +42,10 @@
   <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 
+  {{-- Select2 --}}
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
   @yield('style')
 
 
@@ -217,11 +221,25 @@
  <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
  <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
+ <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+ <script>
+   
+
+ </script>
 
  <script>
-   $('#dataTable').DataTable({
-    searching: false,
-   });
+
+    $('#dept').select2({
+      placeholder:'Select Department',
+      allowClear:true
+    });
+
+    $('#desig').select2({
+      placeholder:'Select Designation',
+      allowClear:true
+    });
+
+   $('#dataTable').DataTable();
   
    </script>
   <script src="{{ asset('js/custom.js') }}"></script>

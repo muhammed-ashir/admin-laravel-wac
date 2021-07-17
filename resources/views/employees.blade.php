@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('addemp')
+{{-- @section('addemp')
 <li class="nav-item">
   <a class="nav-link" href="{{ route('employees.create') }}"><i class="fas fa-user-plus"
       style="color: #0275d8;"></i></a>
 </li>
-@endsection
+@endsection --}}
 @section('sideitem')
 <li class="nav-item menu-open">
   <a href="{{ url('/') }}" class="nav-link">
@@ -120,8 +120,34 @@
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
-        <div class="col-sm-6">
+        <div class="col-sm-2">
           <h1>Employees</h1>
+        </div>
+
+        <div class="col-sm-10">
+          <form class="form form-inline" method="POST" action="{{ url('employees/search') }}" style="float: right;">
+            @csrf
+            
+            <select name="department[]" class="form-control" id="dept" multiple="multiple" style="width: 300px;">
+              <option value=""> Select Department</option>
+              @foreach ($departments as $department)
+              <option value="{{ $department->id }}">{{ $department->department }}</option>
+              @endforeach
+            </select>
+            <div class="ml-3"></div>
+            <select name="designation[]" class="form-control" id="desig" multiple="multiple" style="width: 300px;">
+              <option value=""> Select Designation</option>
+              @foreach ($designations as $designation)
+              <option value="{{ $designation->id }}">{{ $designation->designation }}</option>
+              @endforeach
+            </select>
+            <button type="submit" class="btn btn-primary ml-2"><i
+              class="fa fa-search"></i></button>
+              <div><a class="btn btn-primary ml-3" href="{{ route('employees.create') }}" style="text-align: right;"><i class="fas fa-user-plus"
+                style="color: white;font-size:20px;"></i></a></div>
+          </form>
+          
+
         </div>
 
       </div>
@@ -136,32 +162,10 @@
 
 
           <div class="card">
-
+            
             <!-- /.card-header -->
             <div class="card-body">
-
-              <form class="form form-inline" method="POST" action="{{ url('employees/search') }}" style="float: right;">
-                @csrf
-                <label for="input_search" class="ml-3">Search</label>
-                <input type="text" class="form-control ml-2" id="input_search" name="search_string" value="">
-                
-                <select name="department" class="form-control ml-3">
-                  <option value=""> Select Department</option>
-                  @foreach ($departments as $department)
-                  <option value="{{ $department->id }}">{{ $department->department }}</option>
-                  @endforeach
-                </select>
-                <select name="designation" class="form-control ml-3" id="input_order">
-                  <option value=""> Select Designation</option>
-                  @foreach ($designations as $designation)
-                  <option value="{{ $designation->id }}">{{ $designation->designation }}</option>
-                  @endforeach
-                </select>
-                <button type="submit" class="btn btn-primary ml-3"><i
-                  class="fa fa-search"></i></button>
-                {{-- <input type="submit" value="Go" class="btn btn-primary ml-3"> --}}
-              </form>
-              <div style="margin-top: 5px;"></div>
+              
               <table id="dataTable" class="table table-bordered table-striped">
                 <thead>
                   <tr>

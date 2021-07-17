@@ -211,22 +211,22 @@ class EmployeeController extends Controller
     public function search(Request $request)
     {
 
-
         $datas = Employee::query();
-        if (!empty($request->search_string)) {
-            $datas = $datas->where('name', 'LIKE', "%$request->search_string%");
-        }
 
         if (!empty($request->department)) {
-            $datas = $datas->where('department_id', '=', $request->department);
+
+            $datas = $datas->whereIn('department_id', $request->department); 
         }
+
         if (!empty($request->designation)) {
 
-            $datas = $datas->where('designation_id', '=', $request->designation);
+            $datas = $datas->whereIn('designation_id', $request->designation); 
         }
+
+        
         $datas = $datas->get();
 
-        // dd($datas);
+
         $departments = Department::all();
         $designations = Designation::all();
         return view('employees', compact('datas', 'departments', 'designations'));
