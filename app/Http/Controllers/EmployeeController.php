@@ -9,11 +9,10 @@ use App\Designation;
 use App\Mail\WelcomeEmployee;
 use Illuminate\Support\Facades\Mail;
 use App\Jobs\WelcomeEmailJob;
-
+use DataTables;
 
 class EmployeeController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -24,14 +23,39 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->ajax()) {
+            $data = Employee::all();
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('department', function ($row) {
+                        return $row->department->department;
+                    })
+                    ->addColumn('designation', function ($row) {
+                        return $row->designation->designation;
+                    })
+                    ->addColumn('status', function ($row) {
+                        $status= $row->status==1?"checked":"";
+                        return'<label class="switch">
+                        <input onclick="isEnabled('.$row->id.')" type="checkbox"'.$status.'>
+                        <span class="slider round"></span>
+                      </label>';
+                    })
+                    ->addColumn('action', function ($row) {
+                        
+                        return '<a href="" class="btn" data-toggle="modal" data-target="#view"
+                        style="color: black;margin:5px;padding:0;"
+                        onclick="viewBtn('.$row->id.')"><i
+                          class="fa fa-eye"></i></a>';
+                    })
+                    ->rawColumns(['department','designation','status','action'])
+                    ->make(true);
+        }
 
-
-        $datas = Employee::all();
         $departments = Department::all();
         $designations = Designation::all();
-        return view('employees', compact('datas', 'departments', 'designations'));
+        return view('employees', compact('departments', 'designations'));
     }
 
     /**
@@ -54,7 +78,6 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
             'name' => 'required',
             'pwd' => 'required|min:5',
@@ -72,17 +95,6 @@ class EmployeeController extends Controller
         $image  = time() . '.' . $request->photo->extension();
         $request->photo->move(public_path('images'), $image);
 
-
-        // Employee::create([
-        //     'name' => $request['name'],
-        //     'email' => $request['email'],
-        //     'photo' => $image,
-        //     'password' => bcrypt($request['pwd']),
-        //     'address' => $request['address'],
-        //     'department_id' => $request['department'],
-        //     'designation_id' => $request['designation']
-
-        // ]);
 
         $employee =  new Employee();
         $employee->name = $request->name;
@@ -136,7 +148,6 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $request->validate([
             'name' => 'required',
             'pwd' => 'required|min:5',
@@ -196,31 +207,31 @@ class EmployeeController extends Controller
             ->with('success', 'Deleted Successfully');
     }
 
-    public function status($status, $id)
+    public function status(Request $request)
     {
-
-        $data = Employee::find($id);
-
-        $data->status = $status;
+        $data = Employee::find($request->id);
+        $data->status = $data->status==1?0:1;
         $data->save();
 
-        return redirect()->route('employees.index')
-            ->with('success', 'Status Changed Successfully');
+        if ($data->id) {
+            return [
+                'status'=>true,
+                'msg'=> $data->status==1?'Successfully Enabled user':'Successfully Blocked user'
+            ];
+        }
     }
+    
 
     public function search(Request $request)
     {
-
         $datas = Employee::query();
 
         if (!empty($request->department)) {
-
-            $datas = $datas->whereIn('department_id', $request->department); 
+            $datas = $datas->whereIn('department_id', $request->department);
         }
 
         if (!empty($request->designation)) {
-
-            $datas = $datas->whereIn('designation_id', $request->designation); 
+            $datas = $datas->whereIn('designation_id', $request->designation);
         }
 
         

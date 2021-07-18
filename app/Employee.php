@@ -10,6 +10,10 @@ class Employee extends Model
     protected $fillable = [
         'name', 'email','photo','password','address','department_id','designation_id',
     ];
+    protected $hidden = [
+        'password',
+    ];
+
     public function department()
     {
         return $this->belongsTo(Department::class);

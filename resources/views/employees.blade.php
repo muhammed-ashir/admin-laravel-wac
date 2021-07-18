@@ -3,7 +3,7 @@
 {{-- @section('addemp')
 <li class="nav-item">
   <a class="nav-link" href="{{ route('employees.create') }}"><i class="fas fa-user-plus"
-      style="color: #0275d8;"></i></a>
+  style="color: #0275d8;"></i></a>
 </li>
 @endsection --}}
 @section('sideitem')
@@ -127,7 +127,7 @@
         <div class="col-sm-10">
           <form class="form form-inline" method="POST" action="{{ url('employees/search') }}" style="float: right;">
             @csrf
-            
+
             <select name="department[]" class="form-control" id="dept" multiple="multiple" style="width: 300px;">
               <option value=""> Select Department</option>
               @foreach ($departments as $department)
@@ -141,12 +141,11 @@
               <option value="{{ $designation->id }}">{{ $designation->designation }}</option>
               @endforeach
             </select>
-            <button type="submit" class="btn btn-primary ml-2"><i
-              class="fa fa-search"></i></button>
-              <div><a class="btn btn-primary ml-3" href="{{ route('employees.create') }}" style="text-align: right;"><i class="fas fa-user-plus"
-                style="color: white;font-size:20px;"></i></a></div>
+            <button type="submit" class="btn btn-primary ml-2"><i class="fa fa-search"></i></button>
+            <div><a class="btn btn-primary ml-3" href="{{ route('employees.create') }}" style="text-align: right;"><i
+                  class="fas fa-user-plus" style="color: white;font-size:20px;"></i></a></div>
           </form>
-          
+
 
         </div>
 
@@ -162,13 +161,14 @@
 
 
           <div class="card">
-            
+
             <!-- /.card-header -->
             <div class="card-body">
-              
+
               <table id="dataTable" class="table table-bordered table-striped">
                 <thead>
                   <tr>
+                    <th>No</th>
                     <th>Name</th>
                     <th>Mail id</th>
                     <th>Photo</th>
@@ -180,49 +180,49 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($datas as $emp)
+                  {{-- @foreach ($datas as $emp)
                   
 
                   <tr>
                     <td>{{ $emp->name }}</td>
-                    <td>{{ $emp->email }}</td>
-                    <td><img src="{{ asset('images/'.$emp->photo) }}" alt="" height="50px" width="70px"></td>
-                    <td>{{ $emp->address }}</td>
-                    <td>{{ $emp->department->department }}</td>
-                    <td>{{ $emp->designation->designation }}</td>
+                  <td>{{ $emp->email }}</td>
+                  <td><img src="{{ asset('images/'.$emp->photo) }}" alt="" height="50px" width="70px"></td>
+                  <td>{{ $emp->address }}</td>
+                  <td>{{ $emp->department->department }}</td>
+                  <td>{{ $emp->designation->designation }}</td>
 
-                    <td>
-                      @if ($emp->status)
-                      <a href="{{ url('employees/status/0')."/".$emp->id}}"
-                        onclick="return confirm('Do you really want to Block')" style="color: green">Active &nbsp;<i
-                          class="fa fa-user-check"></i></a>
-                      @else
-                      <a href="{{ url('employees/status/1')."/".$emp->id}}"
-                        onclick="return confirm('Do you really want to Un-Block')" style="color: red">Blocked &nbsp;<i
-                          class="fa fa-user-times"></i></a>
-                      @endif
+                  <td>
+                    @if ($emp->status)
+                    <a href="{{ url('employees/status/0')."/".$emp->id}}"
+                      onclick="return confirm('Do you really want to Block')" style="color: green">Active &nbsp;<i
+                        class="fa fa-user-check"></i></a>
+                    @else
+                    <a href="{{ url('employees/status/1')."/".$emp->id}}"
+                      onclick="return confirm('Do you really want to Un-Block')" style="color: red">Blocked &nbsp;<i
+                        class="fa fa-user-times"></i></a>
+                    @endif
 
 
-                    </td>
-                    <td>
-                      <a href="" class="btn" data-toggle="modal" data-target="#view"
-                        style="color: black;margin:5px;padding:0;"
-                        onclick="viewBtn('{{ $emp->name }}','{{ $emp->email }}','{{ $emp->photo }}','{{ $emp->address }}','{{ $emp->department->department }}','{{ $emp->designation->designation }}','{{ $emp->status }}')"><i
-                          class="fa fa-eye"></i></a>
-                      <a href="{{ route('employees.edit',$emp->id) }}" onclick="return confirm('Do you want to Edit');"
-                        style="margin: 5px;"><i class="fa fa-edit"></i></a>
-                      <form action="{{ route('employees.destroy',$emp->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" onclick="return confirm('Do you want to Delete');"
-                          style="border: none;background: none;margin:5px;">
-                          <i class="fa fa-trash" style="color:red;"></i>
-                        </button>
+                  </td>
+                  <td>
+                    <a href="" class="btn" data-toggle="modal" data-target="#view"
+                      style="color: black;margin:5px;padding:0;"
+                      onclick="viewBtn('{{ $emp->name }}','{{ $emp->email }}','{{ $emp->photo }}','{{ $emp->address }}','{{ $emp->department->department }}','{{ $emp->designation->designation }}','{{ $emp->status }}')"><i
+                        class="fa fa-eye"></i></a>
+                    <a href="{{ route('employees.edit',$emp->id) }}" onclick="return confirm('Do you want to Edit');"
+                      style="margin: 5px;"><i class="fa fa-edit"></i></a>
+                    <form action="{{ route('employees.destroy',$emp->id) }}" method="POST">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" onclick="return confirm('Do you want to Delete');"
+                        style="border: none;background: none;margin:5px;">
+                        <i class="fa fa-trash" style="color:red;"></i>
+                      </button>
 
-                      </form>
-                    </td>
+                    </form>
+                  </td>
                   </tr>
-                  @endforeach
+                  @endforeach --}}
                 </tbody>
 
               </table>
@@ -241,20 +241,85 @@
 </div>
 
 <script>
-  function viewBtn(name,email,photo,address,department,designation,status){
-    document.getElementById('name').innerHTML=name;
-    document.getElementById('designation').innerHTML=designation;
+  function viewBtn(id){
 
-    if(status == 1){
-        document.getElementById('status').innerHTML = '<span style="color: green">Active &nbsp;<i class="fa fa-user-check"></i></span>';
-    }
-    else{
-        document.getElementById('status').innerHTML = '<span style="color: red">Blocked &nbsp;<i class="fa fa-user-times"></i></span>';
-    }
-    document.getElementById('department').innerHTML=department;
-    document.getElementById('email').innerHTML=email;
-    document.getElementById('address').innerHTML=address;
-    document.getElementById('photo').src="{{ url('images/') }}/"+photo;
+    
+
+    // document.getElementById('name').innerHTML=name;
+    // document.getElementById('designation').innerHTML=designation;
+
+    // if(status == 1){
+    //     document.getElementById('status').innerHTML = '<span style="color: green">Active &nbsp;<i class="fa fa-user-check"></i></span>';
+    // }
+    // else{
+    //     document.getElementById('status').innerHTML = '<span style="color: red">Blocked &nbsp;<i class="fa fa-user-times"></i></span>';
+    // }
+    // document.getElementById('department').innerHTML=department;
+    // document.getElementById('email').innerHTML=email;
+    // document.getElementById('address').innerHTML=address;
+    // document.getElementById('photo').src="{{ url('images/') }}/"+photo;
 }
+</script>
+@endsection
+
+@section('script')
+
+<script>
+  var table = $('#dataTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('employees.index') }}",
+        columns: [
+            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'name', name: 'name'},
+            {data: 'email', name: 'email'},
+            {data: 'photo', name: 'photo'},
+            {data: 'address', name: 'address'},
+            {data: 'department', name: 'department'},
+            {data: 'designation', name: 'designation'},
+            {data: 'status', name: 'status'},
+            {data: 'action', name: 'action'},
+        ]
+    });
+
+    // 
+  function isEnabled(id) {
+    
+    if(confirm('Do you want to change'))
+    {
+          $.ajax({
+          type: "POST",
+          url: "{{ url('employees/status') }}",
+          data: {
+            "_token": "{{ csrf_token() }}",
+            'id':id
+          },
+          cache: false,
+          dataType:'json',
+          success: function(data){
+            if(data.status==true)
+               alert(data.msg)
+          },
+          error: function(error){
+          }
+        });
+    }
+  }
+
+
+    
+    $('#dept').select2({
+      placeholder:'Select Department',
+      allowClear:true,
+      closeOnSelect: false
+    });
+
+    $('#desig').select2({
+      placeholder:'Select Designation',
+      allowClear:true,
+      closeOnSelect: false
+    });
+
+
 </script>
 @endsection

@@ -17,5 +17,5 @@ Auth::routes(['register'=>false]);
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::resource('/employees', 'EmployeeController');
-Route::get('/employees/status/{status}/{id}','EmployeeController@status');
+Route::post('/employees/status','EmployeeController@status');
 Route::post('/employees/search', 'EmployeeController@search');
