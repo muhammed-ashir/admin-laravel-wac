@@ -47,10 +47,15 @@ class EmployeeController extends Controller
                       </label>';
                     })
                     ->addColumn('action', function ($row) {
+                        $href = route('employees.edit',$row->id);
+                        
+
                         return '<a href="" class="btn" data-toggle="modal" data-target="#view"
                         style="color: black;margin:5px;padding:0;"
                         onclick="viewBtn('.$row->id.')"><i
-                          class="fa fa-eye"></i></a>';
+                        class="fa fa-eye"></i></a>
+                        <a href='.$href.' style="margin: 5px;"><i class="fa fa-edit"></i></a>
+                          ';
                     })
                     ->rawColumns(['photo','department','designation','status','action'])
                     ->make(true);
