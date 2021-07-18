@@ -243,21 +243,39 @@
 <script>
   function viewBtn(id){
 
-    
+    $.ajax({
+          type: "POST",
+          url: "{{ url('employees/view') }}",
+          data: {
+            "_token": "{{ csrf_token() }}",
+            'id':id
+          },
+          cache: false,
+          dataType:'json',
+          success: function(data){
+             var department = data.department;
+             var designation = data.designation;
+             var data = data.data;
+              console.log(data)
 
-    // document.getElementById('name').innerHTML=name;
-    // document.getElementById('designation').innerHTML=designation;
+              document.getElementById('name').innerHTML=data.name;
+              document.getElementById('designation').innerHTML=designation;
 
-    // if(status == 1){
-    //     document.getElementById('status').innerHTML = '<span style="color: green">Active &nbsp;<i class="fa fa-user-check"></i></span>';
-    // }
-    // else{
-    //     document.getElementById('status').innerHTML = '<span style="color: red">Blocked &nbsp;<i class="fa fa-user-times"></i></span>';
-    // }
-    // document.getElementById('department').innerHTML=department;
-    // document.getElementById('email').innerHTML=email;
-    // document.getElementById('address').innerHTML=address;
-    // document.getElementById('photo').src="{{ url('images/') }}/"+photo;
+              if(data.status == 1){
+                  document.getElementById('status').innerHTML = '<span style="color: green">Active &nbsp;<i class="fa fa-user-check"></i></span>';
+              }
+              else{
+                  document.getElementById('status').innerHTML = '<span style="color: red">Blocked &nbsp;<i class="fa fa-user-times"></i></span>';
+              }
+              document.getElementById('department').innerHTML=department;
+              document.getElementById('email').innerHTML=data.email;
+              document.getElementById('address').innerHTML=data.address;
+              document.getElementById('photo').src="{{ url('images/') }}/"+data.photo;
+          },
+          error: function(error){
+          }
+        });
+
 }
 </script>
 @endsection

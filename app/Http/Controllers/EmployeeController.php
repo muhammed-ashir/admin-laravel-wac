@@ -35,6 +35,10 @@ class EmployeeController extends Controller
                     ->addColumn('designation', function ($row) {
                         return $row->designation->designation;
                     })
+                    ->addColumn('photo', function ($row) {
+                        $src =  url('images/'.$row->photo);
+                        return "<img src=$src width='50px'>";
+                    })
                     ->addColumn('status', function ($row) {
                         $status= $row->status==1?"checked":"";
                         return'<label class="switch">
@@ -43,13 +47,12 @@ class EmployeeController extends Controller
                       </label>';
                     })
                     ->addColumn('action', function ($row) {
-                        
                         return '<a href="" class="btn" data-toggle="modal" data-target="#view"
                         style="color: black;margin:5px;padding:0;"
                         onclick="viewBtn('.$row->id.')"><i
                           class="fa fa-eye"></i></a>';
                     })
-                    ->rawColumns(['department','designation','status','action'])
+                    ->rawColumns(['photo','department','designation','status','action'])
                     ->make(true);
         }
 
@@ -219,6 +222,15 @@ class EmployeeController extends Controller
                 'msg'=> $data->status==1?'Successfully Enabled user':'Successfully Blocked user'
             ];
         }
+    }
+
+    public function view(Request $request)
+    {
+        $data = Employee::find($request->id);
+        $department = Department::find($data->department_id);
+        $designation = Designation::find($data->designation_id);
+
+        return [ 'data'=>$data, 'department'=>$department->department, 'designation'=>$designation->designation ];
     }
     
 
