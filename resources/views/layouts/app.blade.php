@@ -231,12 +231,14 @@
 
     $('#dept').select2({
       placeholder:'Select Department',
-      allowClear:true
+      allowClear:true,
+      closeOnSelect: false
     });
 
     $('#desig').select2({
       placeholder:'Select Designation',
-      allowClear:true
+      allowClear:true,
+      closeOnSelect: false
     });
 
    $('#dataTable').DataTable();
