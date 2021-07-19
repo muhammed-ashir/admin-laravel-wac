@@ -107,32 +107,40 @@
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
-        <div class="col-sm-2">
-          <h1>Employees</h1>
-          <div class="mt-3"><a class="btn btn-primary ml-3" href="{{ route('employees.create') }}" style="text-align: right;"><i
-            class="fas fa-user-plus" style="color: white;font-size:20px;"></i></a></div>
+
+        <div class="col-sm-12">
+          <div class="row mb-2">
+            <div class="col-sm-12">
+              <h1>Employees</h1>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-sm-2">
+              <div class="mt-1"><a class="btn btn-primary ml-3" href="{{ route('employees.create') }}" style="text-align: right;"><i
+                class="fas fa-user-plus" style="color: white;font-size:20px;"></i></a></div>
+            </div>
+            <div class="col-sm-10 mt-2">
+              <div style="float: right;">
+              <select name="department" class="form-control" id="dept" multiple="multiple" style="width: 300px;">
+                {{-- <option value=""> Select Department</option> --}}
+                @foreach ($departments as $department)
+                <option value="{{ $department->id }}">{{ $department->department }}</option>
+                @endforeach
+              </select>
+            </div>
+              
+              <div style="float: right;margin-right:10px;">
+              <select name="designation" class="form-control" id="desig" multiple="multiple" style="width: 300px;">
+                {{-- <option value=""> Select Designation</option> --}}
+                @foreach ($designations as $designation)
+                <option value="{{ $designation->id }}">{{ $designation->designation }}</option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+          </div>
         </div>
 
-        <div class="col-sm-10">
-            <div style="float: right;">
-            <select name="department" class="form-control" id="dept" multiple="multiple" style="width: 300px;">
-              {{-- <option value=""> Select Department</option> --}}
-              @foreach ($departments as $department)
-              <option value="{{ $department->id }}">{{ $department->department }}</option>
-              @endforeach
-            </select>
-          </div>
-            
-            <div style="float: right;margin-right:10px;">
-            <select name="designation" class="form-control" id="desig" multiple="multiple" style="width: 300px;">
-              {{-- <option value=""> Select Designation</option> --}}
-              @foreach ($designations as $designation)
-              <option value="{{ $designation->id }}">{{ $designation->designation }}</option>
-              @endforeach
-            </select>
-          </div>
-
-        </div>
 
       </div>
     </div><!-- /.container-fluid -->
