@@ -303,6 +303,7 @@ function deleteEmployee(id){
           cache: false,
           dataType:'json',
           success: function(data){
+            table.ajax.reload();
             if(data.status==true)
                alert(data.msg)
           },
