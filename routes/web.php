@@ -19,4 +19,5 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::resource('/employees', 'EmployeeController');
 Route::post('/employees/status','EmployeeController@status');
 Route::post('/employees/view','EmployeeController@view');
+Route::post('/employees/delete','EmployeeController@delete');
 Route::post('/employees/search', 'EmployeeController@search');

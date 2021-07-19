@@ -55,6 +55,8 @@ class EmployeeController extends Controller
                         onclick="viewBtn('.$row->id.')"><i
                         class="fa fa-eye"></i></a>
                         <a href='.$href.' style="margin: 5px;"><i class="fa fa-edit"></i></a>
+                        <a class="btn" style="margin: 5px;" onclick="deleteEmployee('.$row->id.')"><i class="fa fa-trash" style="color:red;"></i></a>
+
                           ';
                     })
                     ->rawColumns(['photo','department','designation','status','action'])
@@ -195,9 +197,10 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete(Request $request)
     {
-        $data = Employee::find($id);
+    
+        $data = Employee::find($request->id);
         $image = $data->photo;
 
         $file_path  = public_path('images/');
@@ -207,24 +210,28 @@ class EmployeeController extends Controller
             @unlink($image_path);
         }
 
+        $deleted = $data->delete();
 
-        $data->delete();
+        if ($deleted) {
+            return [
+                'status'=>true,
+                'msg'=> 'Successfully Deleted Employee'
+            ];
+        }
 
 
-        return redirect()->route('employees.index')
-            ->with('success', 'Deleted Successfully');
     }
 
     public function status(Request $request)
     {
         $data = Employee::find($request->id);
         $data->status = $data->status==1?0:1;
-        $data->save();
+        $changed = $data->save();
 
-        if ($data->id) {
+        if ($changed) {
             return [
                 'status'=>true,
-                'msg'=> $data->status==1?'Successfully Enabled user':'Successfully Blocked user'
+                'msg'=> $data->status==1?'Successfully Enabled Employee':'Successfully Blocked Employee'
             ];
         }
     }

@@ -241,48 +241,15 @@
 </div>
 
 <script>
-  function viewBtn(id){
-
-    $.ajax({
-          type: "POST",
-          url: "{{ url('employees/view') }}",
-          data: {
-            "_token": "{{ csrf_token() }}",
-            'id':id
-          },
-          cache: false,
-          dataType:'json',
-          success: function(data){
-             var department = data.department;
-             var designation = data.designation;
-             var data = data.data;
-              console.log(data)
-
-              document.getElementById('name').innerHTML=data.name;
-              document.getElementById('designation').innerHTML=designation;
-
-              if(data.status == 1){
-                  document.getElementById('status').innerHTML = '<span style="color: green">Active &nbsp;<i class="fa fa-user-check"></i></span>';
-              }
-              else{
-                  document.getElementById('status').innerHTML = '<span style="color: red">Blocked &nbsp;<i class="fa fa-user-times"></i></span>';
-              }
-              document.getElementById('department').innerHTML=department;
-              document.getElementById('email').innerHTML=data.email;
-              document.getElementById('address').innerHTML=data.address;
-              document.getElementById('photo').src="{{ url('images/') }}/"+data.photo;
-          },
-          error: function(error){
-          }
-        });
-
-}
+  
 </script>
 @endsection
 
 @section('script')
 
 <script>
+
+  // datatable
   var table = $('#dataTable').DataTable({
         processing: true,
         serverSide: true,
@@ -300,7 +267,22 @@
         ]
     });
 
-    // 
+    // select
+    
+    $('#dept').select2({
+      placeholder:'Select Department',
+      allowClear:true,
+      closeOnSelect: false
+    });
+
+    $('#desig').select2({
+      placeholder:'Select Designation',
+      allowClear:true,
+      closeOnSelect: false
+    });
+
+
+  // status
   function isEnabled(id) {
     
     if(confirm('Do you want to change'))
@@ -324,20 +306,66 @@
     }
   }
 
+  // view
 
-    
-    $('#dept').select2({
-      placeholder:'Select Department',
-      allowClear:true,
-      closeOnSelect: false
+  function viewBtn(id){
+
+    $.ajax({
+      type: "POST",
+      url: "{{ url('employees/view') }}",
+      data: {
+        "_token": "{{ csrf_token() }}",
+        'id':id
+      },
+      cache: false,
+      dataType:'json',
+      success: function(data){
+         var department = data.department;
+         var designation = data.designation;
+         var data = data.data;
+          console.log(data)
+
+          document.getElementById('name').innerHTML=data.name;
+          document.getElementById('designation').innerHTML=designation;
+
+          if(data.status == 1){
+              document.getElementById('status').innerHTML = '<span style="color: green">Active &nbsp;<i class="fa fa-user-check"></i></span>';
+          }
+          else{
+              document.getElementById('status').innerHTML = '<span style="color: red">Blocked &nbsp;<i class="fa fa-user-times"></i></span>';
+          }
+          document.getElementById('department').innerHTML=department;
+          document.getElementById('email').innerHTML=data.email;
+          document.getElementById('address').innerHTML=data.address;
+          document.getElementById('photo').src="{{ url('images/') }}/"+data.photo;
+      },
+      error: function(error){
+      }
     });
 
-    $('#desig').select2({
-      placeholder:'Select Designation',
-      allowClear:true,
-      closeOnSelect: false
-    });
+}
 
+function deleteEmployee(id){
+  if(confirm('Do you want to delete'))
+    {
+          $.ajax({
+          type: "POST",
+          url: "{{ url('employees/delete') }}",
+          data: {
+            "_token": "{{ csrf_token() }}",
+            'id':id
+          },
+          cache: false,
+          dataType:'json',
+          success: function(data){
+            if(data.status==true)
+               alert(data.msg)
+          },
+          error: function(error){
+          }
+        });
+    }
+}
 
 </script>
 @endsection
