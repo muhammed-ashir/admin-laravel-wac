@@ -1,11 +1,6 @@
 @extends('layouts.app')
 
-{{-- @section('addemp')
-<li class="nav-item">
-  <a class="nav-link" href="{{ route('employees.create') }}"><i class="fas fa-user-plus"
-  style="color: #0275d8;"></i></a>
-</li>
-@endsection --}}
+
 @section('sideitem')
 <li class="nav-item menu-open">
   <a href="{{ url('/') }}" class="nav-link">
@@ -25,14 +20,6 @@
   </a>
 </li>
 
-{{-- <li class="nav-item menu-open">
-  <a href="mm" class="nav-link">
-    <i class="fa fa-user-plus" style="margin: 7px;"></i>
-    <p>
-      Add Admin
-    </p>
-  </a>
-</li> --}}
 
 @endsection
 
@@ -180,49 +167,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {{-- @foreach ($datas as $emp)
                   
-
-                  <tr>
-                    <td>{{ $emp->name }}</td>
-                  <td>{{ $emp->email }}</td>
-                  <td><img src="{{ asset('images/'.$emp->photo) }}" alt="" height="50px" width="70px"></td>
-                  <td>{{ $emp->address }}</td>
-                  <td>{{ $emp->department->department }}</td>
-                  <td>{{ $emp->designation->designation }}</td>
-
-                  <td>
-                    @if ($emp->status)
-                    <a href="{{ url('employees/status/0')."/".$emp->id}}"
-                      onclick="return confirm('Do you really want to Block')" style="color: green">Active &nbsp;<i
-                        class="fa fa-user-check"></i></a>
-                    @else
-                    <a href="{{ url('employees/status/1')."/".$emp->id}}"
-                      onclick="return confirm('Do you really want to Un-Block')" style="color: red">Blocked &nbsp;<i
-                        class="fa fa-user-times"></i></a>
-                    @endif
-
-
-                  </td>
-                  <td>
-                    <a href="" class="btn" data-toggle="modal" data-target="#view"
-                      style="color: black;margin:5px;padding:0;"
-                      onclick="viewBtn('{{ $emp->name }}','{{ $emp->email }}','{{ $emp->photo }}','{{ $emp->address }}','{{ $emp->department->department }}','{{ $emp->designation->designation }}','{{ $emp->status }}')"><i
-                        class="fa fa-eye"></i></a>
-                    <a href="{{ route('employees.edit',$emp->id) }}" onclick="return confirm('Do you want to Edit');"
-                      style="margin: 5px;"><i class="fa fa-edit"></i></a>
-                    <form action="{{ route('employees.destroy',$emp->id) }}" method="POST">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" onclick="return confirm('Do you want to Delete');"
-                        style="border: none;background: none;margin:5px;">
-                        <i class="fa fa-trash" style="color:red;"></i>
-                      </button>
-
-                    </form>
-                  </td>
-                  </tr>
-                  @endforeach --}}
                 </tbody>
 
               </table>

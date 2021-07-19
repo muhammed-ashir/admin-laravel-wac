@@ -19,14 +19,6 @@
   </a>
 </li>
 
-{{-- <li class="nav-item menu-open">
-  <a href="mm" class="nav-link">
-    <i class="fa fa-user-plus" style="margin: 7px;"></i>
-    <p>
-      Add Admin
-    </p>
-  </a>
-</li> --}}
 
 @endsection
  

@@ -48,7 +48,6 @@ class EmployeeController extends Controller
                     })
                     ->addColumn('action', function ($row) {
                         $href = route('employees.edit',$row->id);
-                        
 
                         return '<a href="" class="btn" data-toggle="modal" data-target="#view"
                         style="color: black;margin:5px;padding:0;"
