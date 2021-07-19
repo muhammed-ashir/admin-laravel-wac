@@ -26,7 +26,7 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Employee::all();
+            $data = Employee::select('*');
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('department', function ($row) {
@@ -47,7 +47,7 @@ class EmployeeController extends Controller
                       </label>';
                     })
                     ->addColumn('action', function ($row) {
-                        $href = route('employees.edit',$row->id);
+                        $href = route('employees.edit', $row->id);
 
                         return '<a href="" class="btn" data-toggle="modal" data-target="#view"
                         style="color: black;margin:5px;padding:0;"
@@ -55,8 +55,18 @@ class EmployeeController extends Controller
                         class="fa fa-eye"></i></a>
                         <a href='.$href.' style="margin: 5px;"><i class="fa fa-edit"></i></a>
                         <a class="btn" style="margin: 5px;" onclick="deleteEmployee('.$row->id.')"><i class="fa fa-trash" style="color:red;"></i></a>
-
                           ';
+                    })
+                    ->filter(function ($instance) use ($request) {
+                      
+                        if ($request->get('department')) {
+                            $instance->whereIn('department_id', $request->get('department'));
+                        }
+
+                        if ($request->get('designation')) {
+                            $instance->whereIn('designation_id', $request->get('designation'));
+                        }
+                        
                     })
                     ->rawColumns(['photo','department','designation','status','action'])
                     ->make(true);
@@ -198,7 +208,6 @@ class EmployeeController extends Controller
      */
     public function delete(Request $request)
     {
-    
         $data = Employee::find($request->id);
         $image = $data->photo;
 
@@ -217,8 +226,6 @@ class EmployeeController extends Controller
                 'msg'=> 'Successfully Deleted Employee'
             ];
         }
-
-
     }
 
     public function status(Request $request)

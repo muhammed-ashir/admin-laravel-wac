@@ -109,30 +109,28 @@
       <div class="row mb-2">
         <div class="col-sm-2">
           <h1>Employees</h1>
+          <div class="mt-3"><a class="btn btn-primary ml-3" href="{{ route('employees.create') }}" style="text-align: right;"><i
+            class="fas fa-user-plus" style="color: white;font-size:20px;"></i></a></div>
         </div>
 
         <div class="col-sm-10">
-          <form class="form form-inline" method="POST" action="{{ url('employees/search') }}" style="float: right;">
-            @csrf
-
-            <select name="department[]" class="form-control" id="dept" multiple="multiple" style="width: 300px;">
-              <option value=""> Select Department</option>
+            <div style="float: right;">
+            <select name="department" class="form-control" id="dept" multiple="multiple" style="width: 300px;">
+              {{-- <option value=""> Select Department</option> --}}
               @foreach ($departments as $department)
               <option value="{{ $department->id }}">{{ $department->department }}</option>
               @endforeach
             </select>
-            <div class="ml-3"></div>
-            <select name="designation[]" class="form-control" id="desig" multiple="multiple" style="width: 300px;">
-              <option value=""> Select Designation</option>
+          </div>
+            
+            <div style="float: right;margin-right:10px;">
+            <select name="designation" class="form-control" id="desig" multiple="multiple" style="width: 300px;">
+              {{-- <option value=""> Select Designation</option> --}}
               @foreach ($designations as $designation)
               <option value="{{ $designation->id }}">{{ $designation->designation }}</option>
               @endforeach
             </select>
-            <button type="submit" class="btn btn-primary ml-2"><i class="fa fa-search"></i></button>
-            <div><a class="btn btn-primary ml-3" href="{{ route('employees.create') }}" style="text-align: right;"><i
-                  class="fas fa-user-plus" style="color: white;font-size:20px;"></i></a></div>
-          </form>
-
+          </div>
 
         </div>
 
@@ -151,7 +149,6 @@
 
             <!-- /.card-header -->
             <div class="card-body">
-
               <table id="dataTable" class="table table-bordered table-striped">
                 <thead>
                   <tr>
@@ -198,9 +195,15 @@
   var table = $('#dataTable').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('employees.index') }}",
+        ajax: {
+          url: "{{ route('employees.index') }}",
+          data: function (data) {
+            data.department = $('#dept').val(),
+            data.designation = $('#desig').val()
+            }
+        },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'id', name: 'id'},
             {data: 'name', name: 'name'},
             {data: 'email', name: 'email'},
             {data: 'photo', name: 'photo'},
@@ -212,8 +215,13 @@
         ]
     });
 
+
+   $(document).change('#dept,#desig',function(){
+        table.draw();
+    });
+
     // select
-    
+  
     $('#dept').select2({
       placeholder:'Select Department',
       allowClear:true,
@@ -268,7 +276,7 @@
          var department = data.department;
          var designation = data.designation;
          var data = data.data;
-          console.log(data)
+ 
 
           document.getElementById('name').innerHTML=data.name;
           document.getElementById('designation').innerHTML=designation;
